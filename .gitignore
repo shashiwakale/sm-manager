@@ -42,6 +42,10 @@
 *.idb
 *.pdb
 
+# Eclipse project files
+*.cproject
+*.project
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
