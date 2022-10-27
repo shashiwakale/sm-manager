@@ -1,5 +1,5 @@
 /*
- * StateMachine.c
+ * sm.c
  *
  *  Created on: 01-Aug-2021
  *      Author: Shashikant S. Wakale
@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "StateMachine.h"
+#include "sm.h"
 
 /******************************************************************************
  * Global Variables
@@ -21,7 +21,8 @@ static uint32_t g_stat_u32PreviousState = INVAL_STATE;
 static uint32_t g_stat_u32PreviousEvent = INVAL_EVENT;
 static const int32_t *g_stat_StateTransitionTable = NULL;
 static void (* const *g_stat_FunctionPointer)();
-
+const int8_t PRE_EVENT = 1;
+const int8_t POST_EVENT = 2;
 /******************************************************************************
  * Static Functions
  *****************************************************************************/
@@ -51,13 +52,14 @@ void InitStateMachine(const int32_t *p_cn_ps32SMTable, const void *p_cn_pvStateF
         }
         else
         {
-            printf("[STATE MACHINE]: Function pointer empty!\n");
+            printf("[SM]: Function pointer empty!\n");
         }
     }
     else
     {
-        printf("[STATE MACHINE]: State Transition Table is Empty!\n");
+        printf("[SM]: State Transition Table is Empty!\n");
     }
+    printf("[SM]: Starting State Machine Manager...\n");
 }
 
 /*
@@ -77,7 +79,9 @@ void StateMachineRun()
     {
         if(g_stat_u32CurrentState != INVAL_STATE)
         {
-            (g_stat_FunctionPointer[g_stat_u32CurrentState])();
+            (g_stat_FunctionPointer[(g_stat_u32CurrentState * 3) + PRE_EVENT])(); //Execute before event function
+            (g_stat_FunctionPointer[(g_stat_u32CurrentState * 3)])(); //Execute main event function
+            (g_stat_FunctionPointer[(g_stat_u32CurrentState * 3) + POST_EVENT])(); //Execute after event function
         }
         g_stat_u32PreviousState = g_stat_u32CurrentState;
     }
@@ -102,6 +106,7 @@ void PostEvent(const int32_t p_cn_s32Event)
     {
         g_stat_u32PreviousEvent = p_cn_s32Event;
         l_u32EventID = *(g_stat_StateTransitionTable + ((p_cn_s32Event + (g_stat_u32CurrentState*sizeof(int32_t)))));
+
         if(l_u32EventID != INVAL_EVENT)
         {
             g_stat_u32CurrentState = l_u32EventID;

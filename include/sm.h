@@ -5,8 +5,8 @@
  *      Author: Shashikant S. Wakale
  */
 
-#ifndef INCLUDE_STATEMACHINE_H_
-#define INCLUDE_STATEMACHINE_H_
+#ifndef INCLUDE_SM_H_
+#define INCLUDE_SM_H_
 
 /******************************************************************************
  * Includes
@@ -25,4 +25,4 @@ void StateMachineRun();
 void PostEvent(int32_t p_s32Event);
 void InitStateMachine(const int32_t *p_cn_ps32SMTable, const void *p_cn_pvStateFunc, const int32_t p_cn_s32DefaultState);
 
-#endif /* INCLUDE_STATEMACHINE_H_ */
+#endif /* INCLUDE_SM_H_ */

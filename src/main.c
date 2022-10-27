@@ -15,59 +15,43 @@
 #include <unistd.h>
 #include <stdint.h>
 
-#include "StateMachine.h"
+#include "sm.h"
+#include "statemachine.h"
 
 /******************************************************************************
  * Global Variables
  *****************************************************************************/
-/*State Machines States*/
-enum state
-{
-    INV_STATE=-1,
-    WAIT,
-    RUN,
-    EXECUTE,
-    TERMINATE,
-    MAX_STATES,
-};
+/* File Name: stateMachine.c
+ *
+ * Description: Auto Generated File for state machine app
+ * Date:27-10-2022 17:22:13
+ * Author: Microsoft Visual Basic Applications
+ */
 
-/*State Machines Events*/
-enum event
-{
-    INV_EVENT=-1,
-    START,
-    PROCESS,
-    STOP,
-    RETURN,
-    MAX_EVENTS,
-};
 
-/******************************************************************************
- * Function Prototypes
- *****************************************************************************/
-void wait(void);
-void run(void);
-void execute(void);
-void terminate(void);
-
-/*State Transition Table*/
 int32_t StateTransitionTable[MAX_EVENTS][MAX_STATES] =
-{               /*WAIT,     RUN,        EXECUTE,    TERMINATE*/
- /*START*/      {RUN,       INV_STATE,  INV_STATE, INV_STATE},
- /*PROCESS*/    {INV_STATE, EXECUTE,    INV_STATE, INV_STATE},
- /*STOP*/       {INV_STATE, INV_STATE,  TERMINATE, INV_STATE},
- /*RETURN*/     {WAIT,      WAIT,       WAIT,      WAIT},
-};
-
-/*State Functions*/
-void (*FunctionPointer[MAX_STATES])() =
 {
-        &wait,
-        &run,
-        &execute,
-        &terminate
+    {RUN,             INV_STATE,       INV_STATE,       INV_STATE},
+    {INV_STATE,       EXECUTE,         INV_STATE,       INV_STATE},
+    {INV_STATE,       INV_STATE,       TERMINATE,       INV_STATE},
+    {WAIT ,           WAIT,            WAIT,            WAIT}
 };
 
+void (*FunctionPointer[])() =
+{
+    &wait ,
+    &pre_wait ,
+    &post_wait ,
+    &run ,
+    &pre_run ,
+    &post_run ,
+    &execute,
+    &pre_execute,
+    &post_execute,
+    &terminate,
+    &pre_terminate,
+    &post_terminate,
+};
 /*
  * Function Name            : myThreadFun
  * Function ID              : SM_MAIN_FUNC_001
@@ -108,6 +92,8 @@ int main()
 
     pthread_create(&thread_id, NULL, myThreadFun, NULL);
 
+    sleep(1);
+
     while(1)
     {
         PostEvent(START);
@@ -122,66 +108,76 @@ int main()
     return 0;
 }
 
-/*
- * Function Name            : wait
- * Function ID              : SM_MAIN_FUNC_003
- * Description              : -
- * Author                   : Shashi
- * Date                     : 01-Aug-21
- * Global Arguments Modified: -
- * Global Arguments Refer   : -
- * Arguments                : -
- * Return Value             : -
- * */
-void wait(void)
+void pre_wait (void)
 {
-    printf("waiting....!\n");
-}
+    /*Write your code here*/
+    printf("pre_wait \n");
+};
 
-/*
- * Function Name            : run
- * Function ID              : SM_MAIN_FUNC_004
- * Description              : -
- * Author                   : Shashi
- * Date                     : 01-Aug-21
- * Global Arguments Modified: -
- * Global Arguments Refer   : -
- * Arguments                : -
- * Return Value             : -
- * */
-void run(void)
+void wait (void)
 {
-    printf("run....!\n");
-}
+    /*Write your code here*/
+    printf("wait \n");
+};
 
-/*
- * Function Name            : execute
- * Function ID              : SM_MAIN_FUNC_005
- * Description              : -
- * Author                   : Shashi
- * Date                     : 01-Aug-21
- * Global Arguments Modified: -
- * Global Arguments Refer   : -
- * Arguments                : -
- * Return Value             : -
- * */
+void post_wait (void)
+{
+    /*Write your code here*/
+    printf("post_wait \n");
+};
+
+void pre_run (void)
+{
+    /*Write your code here*/
+    printf("pre_run \n");
+};
+
+void run (void)
+{
+    /*Write your code here*/
+    printf("run \n");
+};
+
+void post_run (void)
+{
+    /*Write your code here*/
+    printf("post_run \n");
+};
+
+void pre_execute(void)
+{
+    /*Write your code here*/
+    printf("pre_execute\n");
+};
+
 void execute(void)
 {
-    printf("execute....!\n");
-}
+    /*Write your code here*/
+    printf("execute\n");
+};
 
-/*
- * Function Name            : terminate
- * Function ID              : SM_MAIN_FUNC_006
- * Description              : -
- * Author                   : Shashi
- * Date                     : 01-Aug-21
- * Global Arguments Modified: -
- * Global Arguments Refer   : -
- * Arguments                : -
- * Return Value             : -
- * */
+void post_execute(void)
+{
+    /*Write your code here*/
+    printf("post_execute\n");
+};
+
+void pre_terminate(void)
+{
+    /*Write your code here*/
+    printf("pre_terminate\n");
+};
+
 void terminate(void)
 {
-    printf("terminate....!\n");
-}
+    /*Write your code here*/
+    printf("terminate\n");
+};
+
+void post_terminate(void)
+{
+    /*Write your code here*/
+    printf("post_terminate\n");
+};
+
+
