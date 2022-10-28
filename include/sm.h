@@ -23,6 +23,7 @@
  *****************************************************************************/
 void StateMachineRun();
 void PostEvent(int32_t p_s32Event);
-void InitStateMachine(const int32_t *p_cn_ps32SMTable, const void *p_cn_pvStateFunc, const int32_t p_cn_s32DefaultState);
+void InitStateMachine(const int32_t *p_cn_ps32SMTable, const void *p_cn_pvStateFunc,
+        const int32_t p_cn_s32DefaultState, const int32_t p_cn_s32MaxState);
 
 #endif /* INCLUDE_SM_H_ */

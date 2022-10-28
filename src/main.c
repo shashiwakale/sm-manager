@@ -88,7 +88,7 @@ void *myThreadFun(void *vargp)
 int main()
 {
     pthread_t thread_id;
-    InitStateMachine(&StateTransitionTable[0][0], &FunctionPointer, WAIT);
+    InitStateMachine(&StateTransitionTable[0][0], &FunctionPointer, WAIT, MAX_STATES);
 
     pthread_create(&thread_id, NULL, myThreadFun, NULL);
 
