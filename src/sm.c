@@ -20,10 +20,11 @@ static uint32_t g_stat_u32CurrentState = INVAL_STATE;
 static uint32_t g_stat_u32PreviousState = INVAL_STATE;
 static uint32_t g_stat_u32PreviousEvent = INVAL_EVENT;
 static const int32_t *g_stat_StateTransitionTable = NULL;
-static void (* const *g_stat_FunctionPointer)();
+static void (* const *g_stat_FunctionPointer)(void* p_pvData);
 const int8_t PRE_EVENT = 1;
 const int8_t POST_EVENT = 2;
 static int32_t g_s32MaxStates = 0;
+static void* g_pvData = NULL;
 /******************************************************************************
  * Static Functions
  *****************************************************************************/
@@ -84,9 +85,9 @@ void StateMachineRun()
     {
         if(localState != INVAL_STATE)
         {
-            (g_stat_FunctionPointer[(localState * 3) + PRE_EVENT])(); //Execute before event function
-            (g_stat_FunctionPointer[(localState * 3)])(); //Execute main event function
-            (g_stat_FunctionPointer[(localState * 3) + POST_EVENT])(); //Execute after event function
+            (g_stat_FunctionPointer[(localState * 3) + PRE_EVENT])(g_pvData);   //Execute before event function
+            (g_stat_FunctionPointer[(localState * 3)])(g_pvData);               //Execute main event function
+            (g_stat_FunctionPointer[(localState * 3) + POST_EVENT])(g_pvData);  //Execute after event function
         }
         g_stat_u32PreviousState = localState;
     }
@@ -103,7 +104,7 @@ void StateMachineRun()
  * Arguments                : p_cn_s32Event- Event ID
  * Return Value             : -
  * */
-void PostEvent(const int32_t p_cn_s32Event)
+void PostEvent(const int32_t p_cn_s32Event, void* p_pvData)
 {
     uint32_t l_u32EventID = INVAL_EVENT;
     g_stat_u32PreviousEvent = p_cn_s32Event;
@@ -119,6 +120,7 @@ void PostEvent(const int32_t p_cn_s32Event)
 
     if(l_u32EventID != INVAL_EVENT)
     {
+        g_pvData = p_pvData;
         g_stat_u32CurrentState = l_u32EventID;
     }
     else

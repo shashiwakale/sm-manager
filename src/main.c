@@ -37,7 +37,7 @@ int32_t StateTransitionTable[MAX_EVENTS][MAX_STATES] =
     {WAIT ,           WAIT,            WAIT,            WAIT}
 };
 
-void (*FunctionPointer[])() =
+void (*FunctionPointer[])(void* p_pvData) =
 {
     &wait ,
     &pre_wait ,
@@ -96,85 +96,89 @@ int main()
 
     while(1)
     {
-        PostEvent(START);
+        PostEvent(START, "START Event");
         sleep(1);
-        PostEvent(PROCESS);
+        PostEvent(PROCESS, "Process Event");
         sleep(1);
-        PostEvent(STOP);
+        PostEvent(STOP, "Stop Event");
         sleep(1);
-        PostEvent(RETURN);
+        PostEvent(RETURN, "Return Event");
         sleep(1);
     }
     return 0;
 }
 
-void pre_wait (void)
+void pre_wait (void* p_pvData)
 {
     /*Write your code here*/
     printf("pre_wait \n");
 };
 
-void wait (void)
+void wait (void* p_pvData)
 {
     /*Write your code here*/
-    printf("wait \n");
+    char* data = (char*)p_pvData;
+    printf("wait %s\n", data);
 };
 
-void post_wait (void)
+void post_wait (void* p_pvData)
 {
     /*Write your code here*/
     printf("post_wait \n");
 };
 
-void pre_run (void)
+void pre_run (void* p_pvData)
 {
     /*Write your code here*/
     printf("pre_run \n");
 };
 
-void run (void)
+void run (void* p_pvData)
 {
     /*Write your code here*/
-    printf("run \n");
+    char* data = (char*)p_pvData;
+    printf("run %s\n", data);
 };
 
-void post_run (void)
+void post_run (void* p_pvData)
 {
     /*Write your code here*/
     printf("post_run \n");
 };
 
-void pre_execute(void)
+void pre_execute(void* p_pvData)
 {
     /*Write your code here*/
     printf("pre_execute\n");
 };
 
-void execute(void)
+void execute(void* p_pvData)
 {
     /*Write your code here*/
-    printf("execute\n");
+    char* data = (char*)p_pvData;
+    printf("execute %s\n", data);
 };
 
-void post_execute(void)
+void post_execute(void* p_pvData)
 {
     /*Write your code here*/
     printf("post_execute\n");
 };
 
-void pre_terminate(void)
+void pre_terminate(void* p_pvData)
 {
     /*Write your code here*/
     printf("pre_terminate\n");
 };
 
-void terminate(void)
+void terminate(void* p_pvData)
 {
     /*Write your code here*/
-    printf("terminate\n");
+    char* data = (char*)p_pvData;
+    printf("terminate %s\n", data);
 };
 
-void post_terminate(void)
+void post_terminate(void* p_pvData)
 {
     /*Write your code here*/
     printf("post_terminate\n");

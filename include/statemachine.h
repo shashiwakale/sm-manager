@@ -30,18 +30,18 @@ enum state{
 };
 
 
-void wait (void);
-void pre_wait (void);
-void post_wait (void);
-void run (void);
-void pre_run (void);
-void post_run (void);
-void execute(void);
-void pre_execute(void);
-void post_execute(void);
-void terminate(void);
-void pre_terminate(void);
-void post_terminate(void);
+void wait (void* );
+void pre_wait (void* );
+void post_wait (void* );
+void run (void* );
+void pre_run (void* );
+void post_run (void* );
+void execute(void* );
+void pre_execute(void* );
+void post_execute(void* );
+void terminate(void* );
+void pre_terminate(void* );
+void post_terminate(void* );
 
 
 
